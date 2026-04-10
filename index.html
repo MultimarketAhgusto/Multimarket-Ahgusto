@@ -9,12 +9,15 @@
         :root {
             --sidebar-width: 200px;
             --bg-color: #fdfaf5;
+            /* Nuevas variables para tus botones */
+            --btn-bg-celeste: #add8e6; /* Un celeste suave y limpio */
+            --btn-text-black: #000000;
         }
 
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
-            display: flex; /* Esto crea la división lateral */
+            display: flex;
             background-color: var(--bg-color);
             color: #333;
         }
@@ -71,7 +74,7 @@
 
         /* Contenido Principal (Derecha) */
         main {
-            margin-left: var(--sidebar-width); /* Desplaza el contenido */
+            margin-left: var(--sidebar-width);
             width: calc(100% - var(--sidebar-width));
             min-height: 100vh;
             display: flex;
@@ -109,11 +112,6 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.03);
         }
 
-        .card img {
-            width: 50px;
-            margin-bottom: 10px;
-        }
-
         .card h3 {
             font-size: 0.9rem;
             margin: 10px 0;
@@ -127,16 +125,23 @@
             line-height: 1.4;
         }
 
+        /* === ESTA ES LA PARTE QUE HE CAMBIADO PARA TUS BOTONES CELSTES === */
         .btn-ver {
             display: inline-block;
-            padding: 6px 15px;
-            background-color: #f7e8d0;
-            color: #856404;
+            padding: 10px 25px; /* Ligeramente más grandes y redondos */
+            background-color: var(--btn-bg-celeste); /* Fondo celeste */
+            color: var(--btn-text-black); /* Letras negras */
             text-decoration: none;
-            border-radius: 15px;
-            font-size: 0.7rem;
+            border-radius: 20px; /* Bordes redondeados */
+            font-size: 0.75rem;
             font-weight: bold;
+            transition: background-color 0.3s ease; /* Efecto suave al pasar el ratón */
         }
+
+        .btn-ver:hover {
+            background-color: #90cfe2; /* Celeste ligeramente más oscuro al pasar el ratón */
+        }
+        /* === FIN DEL CAMBIO === */
 
         footer {
             width: 100%;

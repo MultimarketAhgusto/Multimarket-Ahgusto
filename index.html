@@ -7,38 +7,43 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --sidebar-width: 200px;
-            --bg-color: #fdfaf5;
-            /* Nuevas variables para tus botones */
-            --btn-bg-celeste: #add8e6; /* Un celeste suave y limpio */
-            --btn-text-black: #000000;
+            --sidebar-width: 220px;
+            /* El fondo de rayas azules y blancas */
+            --bg-stripes: repeating-linear-gradient(
+                90deg,
+                #00468b,
+                #00468b 30px,
+                #ffffff 30px,
+                #ffffff 60px
+            );
         }
 
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
             display: flex;
-            background-color: var(--bg-color);
+            background-color: #fdfaf5;
             color: #333;
         }
 
-        /* Barra Lateral Izquierda */
+        /* Barra Lateral Izquierda - Siempre Blanca y Limpia */
         nav {
             width: var(--sidebar-width);
             height: 100vh;
             background: white;
-            border-right: 1px solid #eee;
+            border-right: 1px solid #ddd;
             position: fixed;
             padding: 20px 0;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            z-index: 10;
         }
 
-        .logo-pequeño {
-            width: 40px;
-            margin: 0 auto 20px;
+        .logo-nav {
+            width: 50px;
+            margin: 0 auto 30px;
             display: block;
+            border-radius: 50%;
         }
 
         nav ul {
@@ -48,129 +53,121 @@
         }
 
         nav ul li {
-            padding: 10px 25px;
-            font-size: 0.85rem;
+            padding: 15px 25px;
+            font-size: 0.9rem;
             font-weight: 600;
-            color: #333;
+            color: #444;
             cursor: pointer;
-            text-transform: uppercase;
+            transition: 0.3s;
         }
 
-        nav ul li:hover {
-            background-color: #f7e8d0;
+        nav ul li:hover, .active {
+            background-color: #fcebc9;
+            color: #000;
         }
 
-        .active {
-            background-color: #f7e8d0;
-            border-right: 3px solid #f39c12;
-        }
-
-        .github-footer {
+        .github-tag {
+            margin-top: auto;
             padding: 20px;
             font-size: 0.7rem;
-            color: #666;
             text-align: center;
+            color: #888;
         }
 
-        /* Contenido Principal (Derecha) */
+        /* Área Principal con el FONDO DE RAYAS */
         main {
             margin-left: var(--sidebar-width);
             width: calc(100% - var(--sidebar-width));
             min-height: 100vh;
+            background: var(--bg-stripes); /* Aquí se aplican las barras */
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
+        /* El Logo Central con fondo amarillo circular */
         header {
             width: 100%;
-            padding: 40px 0;
+            padding: 60px 0;
             text-align: center;
         }
 
-        .main-logo {
-            max-width: 550px;
-            width: 90%;
-            height: auto;
+        .main-banner {
+            max-width: 450px;
+            width: 85%;
+            background: #f1c40f; /* Fondo amarillo del círculo */
+            padding: 40px;
+            border-radius: 50%;
+            border: 8px solid #00468b;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
-        /* Rejilla de Tarjetas */
+        /* Rejilla de Opciones (Tarjetas Blancas) */
         .categories {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
             width: 90%;
-            max-width: 1100px;
-            padding-bottom: 50px;
+            max-width: 1200px;
+            padding: 40px 20px;
         }
 
         .card {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
+            background: white; /* Tarjetas blancas para que resalten sobre las rayas */
+            padding: 30px 20px;
+            border-radius: 20px;
             text-align: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border-bottom: 5px solid #f1c40f;
         }
 
         .card h3 {
-            font-size: 0.9rem;
-            margin: 10px 0;
-            text-transform: uppercase;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            color: #00468b;
         }
 
         .card p {
-            font-size: 0.75rem;
-            color: #777;
-            margin-bottom: 15px;
-            line-height: 1.4;
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 20px;
         }
 
-        /* === ESTA ES LA PARTE QUE HE CAMBIADO PARA TUS BOTONES CELSTES === */
         .btn-ver {
             display: inline-block;
-            padding: 10px 25px; /* Ligeramente más grandes y redondos */
-            background-color: var(--btn-bg-celeste); /* Fondo celeste */
-            color: var(--btn-text-black); /* Letras negras */
+            padding: 10px 25px;
+            background-color: #add8e6; /* Azul clarito como en tu foto */
+            color: #333;
             text-decoration: none;
-            border-radius: 20px; /* Bordes redondeados */
-            font-size: 0.75rem;
+            border-radius: 25px;
+            font-size: 0.8rem;
             font-weight: bold;
-            transition: background-color 0.3s ease; /* Efecto suave al pasar el ratón */
         }
 
-        .btn-ver:hover {
-            background-color: #90cfe2; /* Celeste ligeramente más oscuro al pasar el ratón */
-        }
-        /* === FIN DEL CAMBIO === */
-
+        /* Pie de página */
         footer {
             width: 100%;
-            padding: 20px;
-            font-size: 0.75rem;
-            color: #888;
+            background: white;
+            padding: 15px 0;
             display: flex;
             justify-content: space-around;
-            background: white;
+            font-size: 0.8rem;
             border-top: 1px solid #eee;
         }
-
-        .info-footer span { margin: 0 10px; }
     </style>
 </head>
 <body>
 
     <nav>
-        <div>
-            <img src="fondo.png" class="logo-pequeño" alt="Logo">
-            <ul>
-                <li class="active">Inicio</li>
-                <li>Productos</li>
-                <li>Ofertas</li>
-                <li>Sobre Nosotros</li>
-                <li>Contacto</li>
-            </ul>
-        </div>
-        <div class="github-footer">
+        <img src="fondo.png" class="logo-nav">
+        <ul>
+            <li class="active">INICIO</li>
+            <li>PRODUCTOS</li>
+            <li>OFERTAS</li>
+            <li>SOBRE NOSOTROS</li>
+            <li>CONTACTO</li>
+        </ul>
+        <div class="github-tag">
             <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" width="20"><br>
             Hosted on GitHub Pages
         </div>
@@ -178,44 +175,41 @@
 
     <main>
         <header>
-            <img src="fondo.png" class="main-logo" alt="Multimarket Ahgusto">
+            <img src="fondo.png" class="main-banner" alt="Ah Gusto Multimarket">
         </header>
 
         <section class="categories">
             <div class="card">
                 <h3>FRESCOS Y ABARROTES</h3>
-                <p>Frescos y abarrotes, frescos y frescos y abarrotes.</p>
+                <p>Frescos y abarrotes de la mejor calidad.</p>
                 <a href="#" class="btn-ver">VER MÁS</a>
             </div>
             <div class="card">
                 <h3>HOGAR Y LIMPIEZA</h3>
-                <p>Limpieza para el hogar y limpieza para tu familia.</p>
+                <p>Todo para tu hogar y tu familia.</p>
                 <a href="#" class="btn-ver">VER MÁS</a>
             </div>
             <div class="card">
                 <h3>ELECTRÓNICA</h3>
-                <p>Electrónica, móviles, accesorios y mucho más.</p>
+                <p>Móviles, accesorios y tecnología.</p>
                 <a href="#" class="btn-ver">VER MÁS</a>
             </div>
             <div class="card">
                 <h3>MODA Y ACCESORIOS</h3>
-                <p>Accesorios, moda y complementos actuales.</p>
+                <p>Lo último en tendencias y moda.</p>
                 <a href="#" class="btn-ver">VER MÁS</a>
             </div>
             <div class="card">
                 <h3>JUGUETES Y REGALOS</h3>
-                <p>Juguetes y regalos, y juguetes, juguetes y regalos.</p>
+                <p>Diversión para los más pequeños.</p>
                 <a href="#" class="btn-ver">VER MÁS</a>
             </div>
         </section>
 
         <footer>
-            <span>© 2026 Multimarket Ahgusto - Todo para tu hogar</span>
+            <span>© 2026 Multimarket Ahgusto</span>
             <span>📍 Trujillo, Perú</span>
-            <div>
-                <a href="#" style="color:#888; text-decoration:none; margin-right:10px;">Políticas</a>
-                <a href="#" style="color:#888; text-decoration:none;">Términos</a>
-            </div>
+            <span>Políticas | Términos</span>
         </footer>
     </main>
 

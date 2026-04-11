@@ -7,14 +7,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --sidebar-width: 220px;
-            /* El fondo de rayas azules y blancas */
+            --sidebar-width: 240px;
+            --blue-ahgusto: #00468b;
+            /* Fondo de rayas azules y blancas */
             --bg-stripes: repeating-linear-gradient(
                 90deg,
                 #00468b,
-                #00468b 30px,
-                #ffffff 30px,
-                #ffffff 60px
+                #00468b 40px,
+                #ffffff 40px,
+                #ffffff 80px
             );
         }
 
@@ -22,11 +23,11 @@
             font-family: 'Poppins', sans-serif;
             margin: 0;
             display: flex;
-            background-color: #fdfaf5;
+            background-color: #f4f7f6;
             color: #333;
         }
 
-        /* Barra Lateral Izquierda - Siempre Blanca y Limpia */
+        /* BARRA LATERAL */
         nav {
             width: var(--sidebar-width);
             height: 100vh;
@@ -36,182 +37,251 @@
             padding: 20px 0;
             display: flex;
             flex-direction: column;
-            z-index: 10;
+            z-index: 100;
         }
 
         .logo-nav {
-            width: 50px;
-            margin: 0 auto 30px;
-            display: block;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: var(--blue-ahgusto);
             border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
         }
 
         nav ul {
             list-style: none;
             padding: 0;
-            margin: 0;
         }
 
         nav ul li {
-            padding: 15px 25px;
-            font-size: 0.9rem;
+            padding: 15px 30px;
             font-weight: 600;
-            color: #444;
             cursor: pointer;
             transition: 0.3s;
+            color: #555;
         }
 
-        nav ul li:hover, .active {
-            background-color: #fcebc9;
-            color: #000;
+        nav ul li:hover {
+            background: #f0f7ff;
+            color: var(--blue-ahgusto);
+            padding-left: 40px;
         }
 
-        .github-tag {
-            margin-top: auto;
-            padding: 20px;
-            font-size: 0.7rem;
-            text-align: center;
-            color: #888;
-        }
-
-        /* Área Principal con el FONDO DE RAYAS */
-        main {
+        /* CONTENIDO PRINCIPAL */
+        .main-content {
             margin-left: var(--sidebar-width);
-            width: calc(100% - var(--sidebar-width));
+            flex-grow: 1;
             min-height: 100vh;
-            background: var(--bg-stripes); /* Aquí se aplican las barras */
+            background: var(--bg-stripes);
+            padding: 40px;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        /* El Logo Central con fondo amarillo circular */
-        header {
-            width: 100%;
-            padding: 60px 0;
+        .header-ahgusto {
             text-align: center;
-        }
-
-        .main-banner {
-            max-width: 450px;
-            width: 85%;
-            background: #f1c40f; /* Fondo amarillo del círculo */
-            padding: 40px;
-            border-radius: 50%;
-            border: 8px solid #00468b;
+            color: white;
+            background: rgba(0, 70, 139, 0.9);
+            padding: 20px 40px;
+            border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-
-        /* Rejilla de Opciones (Tarjetas Blancas) */
-        .categories {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            width: 90%;
-            max-width: 1200px;
-            padding: 40px 20px;
-        }
-
-        .card {
-            background: white; /* Tarjetas blancas para que resalten sobre las rayas */
-            padding: 30px 20px;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            border-bottom: 5px solid #f1c40f;
-        }
-
-        .card h3 {
-            font-size: 1rem;
-            margin-bottom: 10px;
-            color: #00468b;
-        }
-
-        .card p {
-            font-size: 0.8rem;
-            color: #666;
-            margin-bottom: 20px;
-        }
-
-        .btn-ver {
-            display: inline-block;
-            padding: 10px 25px;
-            background-color: #add8e6; /* Azul clarito como en tu foto */
-            color: #333;
-            text-decoration: none;
-            border-radius: 25px;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
-
-        /* Pie de página */
-        footer {
+            margin-bottom: 30px;
             width: 100%;
+            max-width: 800px;
+        }
+
+        /* BUSCADOR */
+        .search-container {
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 40px;
+        }
+
+        #buscador {
+            width: 100%;
+            padding: 15px 25px;
+            border-radius: 30px;
+            border: none;
+            font-size: 1rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            outline: none;
+        }
+
+        /* GRID DE PRODUCTOS */
+        .grid-productos {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 25px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        /* TARJETAS */
+        .card {
             background: white;
-            padding: 15px 0;
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+            transition: 0.4s;
             display: flex;
-            justify-content: space-around;
-            font-size: 0.8rem;
-            border-top: 1px solid #eee;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 1px solid #eee;
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .card .codigo {
+            font-size: 0.7rem;
+            color: #aaa;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .card .nombre {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 12px;
+            min-height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.2;
+        }
+
+        .card .precio {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #27ae60;
+            margin-bottom: 15px;
+        }
+
+        .btn-comprar {
+            background: var(--blue-ahgusto);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+
+        .btn-comprar:hover {
+            background: #e67e22; /* Color naranja al pasar el mouse para resaltar */
+        }
+
+        /* Mensaje de no resultados */
+        #sin-resultados {
+            color: white;
+            display: none;
+            font-size: 1.2rem;
+            background: rgba(0,0,0,0.5);
+            padding: 10px 20px;
+            border-radius: 10px;
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <img src="fondo.png" class="logo-nav">
+        <div class="logo-nav">MA</div>
+        <h2 style="text-align:center; font-size: 1rem; color: #00468b;">Ahgusto</h2>
         <ul>
-            <li class="active">INICIO</li>
-            <li>PRODUCTOS</li>
-            <li>OFERTAS</li>
-            <li>SOBRE NOSOTROS</li>
-            <li>CONTACTO</li>
+            <li>🏠 Inicio</li>
+            <li>📦 Productos</li>
+            <li>🔥 Ofertas</li>
+            <li>🛒 Mi Carrito</li>
         </ul>
-        <div class="github-tag">
-            <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" width="20"><br>
-            Hosted on GitHub Pages
-        </div>
     </nav>
 
-    <main>
-        <header>
-            <img src="fondo.png" class="main-banner" alt="Ah Gusto Multimarket">
-        </header>
+    <div class="main-content">
+        <div class="header-ahgusto">
+            <h1 style="margin:0;">Multimarket Ahgusto</h1>
+            <p style="margin:5px 0 0;">Tu ahorro empieza aquí</p>
+        </div>
 
-        <section class="categories">
-            <div class="card">
-                <h3>FRESCOS Y ABARROTES</h3>
-                <p>Frescos y abarrotes de la mejor calidad.</p>
-                <a href="#" class="btn-ver">VER MÁS</a>
-            </div>
-            <div class="card">
-                <h3>HOGAR Y LIMPIEZA</h3>
-                <p>Todo para tu hogar y tu familia.</p>
-                <a href="#" class="btn-ver">VER MÁS</a>
-            </div>
-            <div class="card">
-                <h3>ELECTRÓNICA</h3>
-                <p>Móviles, accesorios y tecnología.</p>
-                <a href="#" class="btn-ver">VER MÁS</a>
-            </div>
-            <div class="card">
-                <h3>MODA Y ACCESORIOS</h3>
-                <p>Lo último en tendencias y moda.</p>
-                <a href="#" class="btn-ver">VER MÁS</a>
-            </div>
-            <div class="card">
-                <h3>JUGUETES Y REGALOS</h3>
-                <p>Diversión para los más pequeños.</p>
-                <a href="#" class="btn-ver">VER MÁS</a>
-            </div>
-        </section>
+        <div class="search-container">
+            <input type="text" id="buscador" placeholder="🔍 Buscar producto por nombre...">
+        </div>
 
-        <footer>
-            <span>© 2026 Multimarket Ahgusto</span>
-            <span>📍 Trujillo, Perú</span>
-            <span>Políticas | Términos</span>
-        </footer>
-    </main>
+        <div id="sin-resultados">No encontramos productos con ese nombre.</div>
+
+        <div class="grid-productos" id="contenedor-productos">
+            </div>
+    </div>
+
+    <script>
+        let todosLosProductos = [];
+
+        async function cargarInventario() {
+            try {
+                // Asegúrate que el archivo se llame exactamente datosproductos.json en GitHub
+                const res = await fetch('datosproductos.json');
+                todosLosProductos = await res.json();
+                mostrarProductos(todosLosProductos);
+            } catch (error) {
+                console.error("Error cargando JSON:", error);
+                document.getElementById('contenedor-productos').innerHTML = 
+                    "<p style='color:white;'>Error al cargar el inventario. Revisa el archivo JSON.</p>";
+            }
+        }
+
+        function mostrarProductos(lista) {
+            const contenedor = document.getElementById('contenedor-productos');
+            const mensajeSinResultados = document.getElementById('sin-resultados');
+            contenedor.innerHTML = "";
+
+            if (lista.length === 0) {
+                mensajeSinResultados.style.display = "block";
+            } else {
+                mensajeSinResultados.style.display = "none";
+                lista.forEach(p => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    
+                    // Ajuste de nombres de campos según tu JSON
+                    // Si en tu JSON es "NOMBRE" en mayúsculas, cámbialo aquí a p.NOMBRE
+                    const nombre = p.nombre || p.NOMBRE || "Producto sin nombre";
+                    const codigo = p.codigo || p.CODIGO || "S/C";
+                    const precio = p.precio || p.PRECIO || 0;
+
+                    card.innerHTML = `
+                        <div class="codigo">REF: ${codigo}</div>
+                        <div class="nombre">${nombre}</div>
+                        <div class="precio">S/ ${parseFloat(precio).toFixed(2)}</div>
+                        <button class="btn-comprar">Agregar al carrito</button>
+                    `;
+                    contenedor.appendChild(card);
+                });
+            }
+        }
+
+        // Lógica del buscador en tiempo real
+        document.getElementById('buscador').addEventListener('input', (e) => {
+            const texto = e.target.value.toLowerCase();
+            const filtrados = todosLosProductos.filter(p => {
+                const nombreP = (p.nombre || p.NOMBRE || "").toLowerCase();
+                return nombreP.includes(texto);
+            });
+            mostrarProductos(filtrados);
+        });
+
+        // Iniciar carga
+        cargarInventario();
+    </script>
 
 </body>
 </html>

@@ -9,7 +9,7 @@
         :root { --sidebar-width: 260px; }
         body { font-family: 'Poppins', sans-serif; margin: 0; display: flex; background-color: #fdfaf5; color: #333; scroll-behavior: smooth; }
 
-        /* Barra Lateral con Filtros */
+        /* Barra Lateral */
         nav { width: var(--sidebar-width); height: 100vh; background: white; border-right: 1px solid #eee; position: fixed; padding: 20px 0; z-index: 10; overflow-y: auto; }
         .logo-nav { width: 40px; margin: 0 auto 20px; display: block; }
         nav ul { list-style: none; padding: 0; margin: 0; }
@@ -26,15 +26,14 @@
         }
         .logo-principal { background: #f1c40f; padding: 20px; border-radius: 50%; border: 4px solid #d35400; width: 150px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
 
-        /* Secciones por Categoría */
-        .categoria-bloque { margin-bottom: 60px; scroll-margin-top: 40px; }
+        /* Secciones por Categoría - OCULTAS POR DEFECTO */
+        .categoria-bloque { display: none; margin-bottom: 60px; }
         .categoria-titulo { font-size: 1.2rem; font-weight: 700; text-transform: uppercase; margin-bottom: 25px; color: #111; border-bottom: 2px solid #eee; padding-bottom: 10px; }
 
-        /* Grid de Tarjetas (Estilo Foto 3) */
+        /* Grid de Tarjetas */
         .grid-productos { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
         .card { background: white; border-radius: 15px; padding: 20px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); display: flex; flex-direction: column; align-items: center; position: relative; }
         
-        /* Etiquetas de Precio y Stock como la foto */
         .precio-tag { background: #1a3c5a; color: white; padding: 4px 12px; border-radius: 5px; font-weight: 700; font-size: 0.9rem; margin-bottom: 10px; }
         .stock-tag { padding: 3px 10px; border-radius: 10px; font-size: 0.75rem; font-weight: 700; margin-bottom: 10px; width: 80%; }
         .con-stock { background: #ffede0; color: #e67e22; }
@@ -44,6 +43,9 @@
         .card h3 { font-size: 0.85rem; font-weight: 600; margin: 10px 0; color: #444; text-transform: capitalize; min-height: 40px; }
 
         .btn-pago { background: #a8dadc; color: #1d3557; border: none; padding: 8px 15px; border-radius: 5px; font-weight: 700; font-size: 0.7rem; cursor: pointer; width: 100%; margin-top: auto; }
+        
+        /* Mensaje de Bienvenida */
+        #bienvenida { text-align: center; padding: 50px; }
     </style>
 </head>
 <body>
@@ -51,8 +53,8 @@
     <nav>
         <img src="logo.png" class="logo-nav" onerror="this.style.display='none'">
         <ul id="menu-categorias">
-            <li class="active" onclick="window.scrollTo(0,0)">Todas las categorías</li>
-            </ul>
+            <li class="active" onclick="mostrarInicio()">🏠 Inicio</li>
+        </ul>
     </nav>
 
     <div class="container">
@@ -63,19 +65,25 @@
             </div>
         </div>
 
+        <div id="bienvenida">
+            <h2>Bienvenido a Multimarket Ahgusto</h2>
+            <p>Selecciona una categoría a la izquierda para ver nuestros productos.</p>
+        </div>
+
         <div id="contenedor-tienda">
             </div>
     </div>
 
     <script>
+        let inventario = [];
+
         async function cargarTienda() {
             try {
                 const respuesta = await fetch('datosproductos.json');
-                const productos = await respuesta.json();
+                inventario = await respuesta.json();
                 
-                // Agrupar por Categoría
                 const grupos = {};
-                productos.forEach(p => {
+                inventario.forEach(p => {
                     const cat = p.Categoría || p.CATEGORIA || "General";
                     if (!grupos[cat]) grupos[cat] = [];
                     grupos[cat].push(p);
@@ -83,19 +91,18 @@
 
                 const tienda = document.getElementById('contenedor-tienda');
                 const menu = document.getElementById('menu-categorias');
-                tienda.innerHTML = '';
 
                 for (const cat in grupos) {
-                    // 1. Añadir al Menú Lateral
+                    // Crear botón en menú
                     const li = document.createElement('li');
                     li.textContent = cat;
-                    li.onclick = () => document.getElementById(cat).scrollIntoView();
+                    li.onclick = () => filtrarPorCategoria(cat, li);
                     menu.appendChild(li);
 
-                    // 2. Crear Sección en el Contenido
+                    // Crear bloque de productos (pero oculto)
                     const seccion = document.createElement('div');
                     seccion.className = 'categoria-bloque';
-                    seccion.id = cat;
+                    seccion.id = `seccion-${cat}`;
                     seccion.innerHTML = `<h2 class="categoria-titulo">${cat}</h2>`;
                     
                     const grid = document.createElement('div');
@@ -105,8 +112,6 @@
                         const stock = parseInt(p.Stock) || 0;
                         const stockClase = stock > 0 ? 'con-stock' : 'sin-stock';
                         const stockTexto = stock > 0 ? `Stock: ${stock}` : 'Sin stock';
-                        
-                        // Busca "P.Venta" exactamente como en tu Excel
                         const precioRaw = p["P.Venta"] || p.P_Venta || p.precio || "0.00";
                         const precioFormateado = precioRaw.toString().includes('S/') ? precioRaw : `S/ ${precioRaw}`;
 
@@ -121,11 +126,38 @@
                         `;
                         grid.appendChild(card);
                     });
-
                     seccion.appendChild(grid);
                     tienda.appendChild(seccion);
                 }
             } catch (err) { console.error("Error:", err); }
+        }
+
+        function filtrarPorCategoria(categoriaSeleccionada, elementoMenu) {
+            // Ocultar bienvenida
+            document.getElementById('bienvenida').style.display = 'none';
+
+            // Ocultar todas las secciones de productos
+            const bloques = document.querySelectorAll('.categoria-bloque');
+            bloques.forEach(b => b.style.display = 'none');
+
+            // Quitar clase activa del menú
+            const itemsMenu = document.querySelectorAll('nav ul li');
+            itemsMenu.forEach(i => i.classList.remove('active'));
+
+            // Mostrar solo la seleccionada
+            document.getElementById(`seccion-${categoriaSeleccionada}`).style.display = 'block';
+            elementoMenu.classList.add('active');
+            window.scrollTo(0,0);
+        }
+
+        function mostrarInicio() {
+            document.getElementById('bienvenida').style.display = 'block';
+            const bloques = document.querySelectorAll('.categoria-bloque');
+            bloques.forEach(b => b.style.display = 'none');
+            
+            const itemsMenu = document.querySelectorAll('nav ul li');
+            itemsMenu.forEach(i => i.classList.remove('active'));
+            itemsMenu[0].classList.add('active');
         }
 
         cargarTienda();
